@@ -15,7 +15,3 @@ go get bitbucket.org/solo_works/apwfile
 ## Author
 
 Created by Sam Shelton for Solo Works London
-
-## License
-
-MIT.
