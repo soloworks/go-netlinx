@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"sort"
 
-	"bitbucket.org/solo_works/apwfile/devicemap"
-	"bitbucket.org/solo_works/apwfile/file"
-	"bitbucket.org/solo_works/apwfile/project"
+	"github.com/soloworks/apwfile/devicemap"
+	"github.com/soloworks/apwfile/file"
+	"github.com/soloworks/apwfile/project"
 )
 
 // Workspace represents the APW XML file structure

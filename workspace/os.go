@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"sort"
 
-	"bitbucket.org/solo_works/apwfile/project"
-	"bitbucket.org/solo_works/apwfile/system"
+	"github.com/soloworks/apwfile/project"
+	"github.com/soloworks/apwfile/system"
 )
 
 // Load returns a struct containing the contents of the

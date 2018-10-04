@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"sort"
 
-	"bitbucket.org/solo_works/apwfile/system"
+	"github.com/soloworks/apwfile/system"
 )
 
 // Project represetents an AMX project in an APW

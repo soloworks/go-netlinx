@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"bitbucket.org/solo_works/apwfile/workspace"
+	"github.com/soloworks/apwfile/workspace"
 )
 
 // FindInFolder searches all subdirectories (recursivly option) for any

@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"bitbucket.org/solo_works/apwfile/devicemap"
-	"bitbucket.org/solo_works/apwfile/irdb"
+	"github.com/soloworks/apwfile/devicemap"
+	"github.com/soloworks/apwfile/irdb"
 )
 
 // A Type specifies a month of the year (January = 1, ...).

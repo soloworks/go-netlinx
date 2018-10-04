@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"bitbucket.org/solo_works/apwfile/workspace"
+	"github.com/soloworks/apwfile/workspace"
 )
 
 // APWInfo holds details about an APW file

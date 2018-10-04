@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"bitbucket.org/solo_works/apwfile/file"
-	"bitbucket.org/solo_works/apwfile/transport"
+	"github.com/soloworks/apwfile/file"
+	"github.com/soloworks/apwfile/transport"
 )
 
 // System represetents an AMX project in an APW
