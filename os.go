@@ -49,7 +49,10 @@ func getAPWs(dir string) []*APWInfo {
 	// Cycle through all and identify those with .apw files
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".apw" {
-			APWInfos = append(APWInfos, NewAPWInfo(filepath.Join(dir, file.Name())))
+			apw, err := LoadAPWInfo(filepath.Join(dir, file.Name()))
+			if err == nil {
+				APWInfos = append(APWInfos, apw)
+			}
 		}
 	}
 
@@ -58,27 +61,26 @@ func getAPWs(dir string) []*APWInfo {
 }
 
 // LoadWorkspace fetches the XML for this apw file
-func (apw *APWInfo) LoadWorkspace() error {
+func (apw *APWInfo) loadXML() error {
 	var err error
 	apw.Workspace, err = workspace.Load(apw.Filename)
 	return err
 }
 
-// SaveWorkspace saves the XML to the designated destination folder
-func (apw *APWInfo) SaveWorkspace() error {
+// ExportWorkspace saves the XML to the designated destination folder
+func (apw *APWInfo) ExportWorkspace() error {
 	workspace.Save(apw.Workspace, apw.Filename)
 	return nil
 }
 
-// SaveArchive pulls all .apw files together into a zip in the target folder using the workspace name
-func (apw *APWInfo) SaveArchive(destDir string, buildID string) error {
+// ExportArchive pulls all .apw files together into a zip in the target folder using the workspace name
+func (apw *APWInfo) ExportArchive(destDir string, buildID string) error {
 	// Verify the APW file is all good before we do this
-	missing, err := apw.checkFiles()
-	if err != nil {
+	if len(apw.FilesMissing) > 0 {
 		var e bytes.Buffer
-		e.WriteString(strconv.Itoa(len(missing)))
+		e.WriteString(strconv.Itoa(len(apw.FilesMissing)))
 		e.WriteString(" File")
-		if len(missing) > 0 {
+		if len(apw.FilesMissing) > 1 {
 			e.WriteString("s")
 		}
 		e.WriteString(" not found")
@@ -102,7 +104,7 @@ func (apw *APWInfo) SaveArchive(destDir string, buildID string) error {
 	defer z.Close()
 
 	// Add each file to the Archive
-	for file, fileType := range apw.Files {
+	for file, fileType := range apw.FilesReferenced {
 
 		// Open existing file
 		fileToZip, err := os.Open(file)

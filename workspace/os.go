@@ -15,6 +15,7 @@ import (
 // Load returns a struct containing the contents of the
 // passed Project's .apw file
 // Move the remove of global project to a seperate function
+// Returns empty workspace if file doesn't exist
 func Load(fn string) (*Workspace, error) {
 
 	// Create new Workspace Object
@@ -22,7 +23,7 @@ func Load(fn string) (*Workspace, error) {
 	// Open to .apw file
 	f, err := os.Open(fn)
 	if err != nil {
-		return nil, err
+		return &w, err
 	}
 	defer f.Close()
 
