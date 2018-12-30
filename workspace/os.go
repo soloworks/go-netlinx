@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/soloworks/apwfile/project"
-	"github.com/soloworks/apwfile/system"
+	"github.com/soloworks/go-netlinx-apwfile/project"
+	"github.com/soloworks/go-netlinx-apwfile/system"
 )
 
 // Load returns a struct containing the contents of the

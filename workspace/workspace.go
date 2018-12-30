@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/soloworks/apwfile/devicemap"
-	"github.com/soloworks/apwfile/file"
-	"github.com/soloworks/apwfile/project"
+	"github.com/soloworks/go-netlinx-apwfile/devicemap"
+	"github.com/soloworks/go-netlinx-apwfile/file"
+	"github.com/soloworks/go-netlinx-apwfile/project"
 )
 
 // Workspace represents the APW XML file structure

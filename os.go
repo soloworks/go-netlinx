@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/soloworks/apwfile/workspace"
+	"github.com/soloworks/go-netlinx-apwfile/workspace"
 )
 
 // FindInFolder searches all subdirectories (recursivly option) for any

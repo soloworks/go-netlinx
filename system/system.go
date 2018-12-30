@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/soloworks/apwfile/file"
-	"github.com/soloworks/apwfile/transport"
+	"github.com/soloworks/go-netlinx-apwfile/file"
+	"github.com/soloworks/go-netlinx-apwfile/transport"
 )
 
 // System represetents an AMX project in an APW

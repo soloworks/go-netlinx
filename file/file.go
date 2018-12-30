@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/soloworks/apwfile/devicemap"
-	"github.com/soloworks/apwfile/irdb"
+	"github.com/soloworks/go-netlinx-apwfile/devicemap"
+	"github.com/soloworks/go-netlinx-apwfile/irdb"
 )
 
 // A Type specifies a month of the year (January = 1, ...).

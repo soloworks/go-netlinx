@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"sort"
 
-	"github.com/soloworks/apwfile/system"
+	"github.com/soloworks/go-netlinx-apwfile/system"
 )
 
 // Project represetents an AMX project in an APW
