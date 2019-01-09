@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/soloworks/apwfile/workspace"
+	"github.com/soloworks/go-netlinx-apwfile/workspace"
 )
 
 // APWInfo holds details about an APW file
