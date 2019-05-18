@@ -1,5 +1,12 @@
 # AMX Netlinx Utilities in Go
 
+## Build Status
+
+| branch | status |
+|-------|----|
+| master  | [![Build Status](https://dev.azure.com/soloworkslondon/Azure-Pipelines/_apis/build/status/soloworks.go-netlinx?branchName=master)](https://dev.azure.com/soloworkslondon/Azure-Pipelines/_build/latest?definitionId=5&branchName=master) |
+| develop | [![Build Status](https://dev.azure.com/soloworkslondon/Azure-Pipelines/_apis/build/status/soloworks.go-netlinx?branchName=develop)](https://dev.azure.com/soloworkslondon/Azure-Pipelines/_build/latest?definitionId=5&branchName=develop) |
+
 This is a group of helper code and utilities for [Netlinx](https://www.amx.com/en/softwares/netlinx-studio-4-v4-4-1626), the control system platform from [AMX by Harman](https://www.amx.com). These are used internally by [Solo Works London](https://soloworks.co.uk) for automation and custom workflow tools for our clients.
 
 ## Getting Started - Source Code
