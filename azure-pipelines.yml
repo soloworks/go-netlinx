@@ -19,21 +19,22 @@ steps:
 #     go build
 #     cd ..
 #   displayName: 'Building Archive Helper'
-- script:
-    cd ./compiler
+- script: |
     go get -d
     env GOOS=windows GOARCH=amd64 go build
-    cd ..
+  workingDirectory: './compiler'
   displayName: 'Building Compiler Helper'
-- script:
-    cd ./ftp
+- script: |
     go get -d
     go build
-    cd ..
+  workingDirectory: './ftp'
   displayName: 'Building FTP Helper'
-- script:
-    cd ./studio
+- script: |
     go get -d
-    env GOOS=windows GOARCH=amd64 go build 
-    cd ..
+#    env GOOS=windows GOARCH=amd64 go build 
+    go build
+  workingDirectory: './studio'
+  env:
+    GOOS: 'windows'
+    GOARCH: 'amd64'
   displayName: 'Building Studio Helper'
