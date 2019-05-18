@@ -13,8 +13,8 @@ pool:
 steps:
 - script: go build ./apw
   displayName: 'Building apw'
-- script: go build ./archive
-  displayName: 'Building Archive Helper'
+#- script: go build ./archive
+#  displayName: 'Building Archive Helper'
 - script: env GOOS=windows GOARCH=amd64 go build ./compiler
   displayName: 'Building Compiler Helper'
 - script: go build ./ftp
