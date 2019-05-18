@@ -15,7 +15,11 @@ steps:
   displayName: 'Building apw'
 #- script: go build ./archive
 #  displayName: 'Building Archive Helper'
-- script: env GOOS=windows GOARCH=amd64 go build ./compiler
+- script:
+    cd ./compiler
+    go get -d
+    env GOOS=windows GOARCH=amd64 go build ./compiler
+    cd ..
   displayName: 'Building Compiler Helper'
 - script: go build ./ftp
   displayName: 'Building FTP Helper'
