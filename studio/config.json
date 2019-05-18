@@ -1,0 +1,21 @@
+
+{
+  "BasePath": "%USERPROFILE%\\Documents\\GitHub\\netlinx-global-code",
+  "Modules": [
+    "ModulesDuet",
+    "ModulesNetlinx",
+    "ModulesDuetRms",
+    "ModulesNetlinxRms"
+  ],
+  "Includes": [
+    "Includes",
+    "IncludesRms"
+  ],
+  "Libs": [],
+  "CompileWithDebug": true,
+  "CompileWithSrc": false,
+  "SmartTransfer": true,
+  "SendSource": false,
+  "TabWidth": 3,
+  "IndentWidth": 3
+}
