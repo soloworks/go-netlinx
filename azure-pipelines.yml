@@ -21,7 +21,15 @@ steps:
     env GOOS=windows GOARCH=amd64 go build ./compiler
     cd ..
   displayName: 'Building Compiler Helper'
-- script: go build ./ftp
+- script:
+    cd ./ftp
+    go get -d
+    go build ./ftp
+    cd ..
   displayName: 'Building FTP Helper'
-- script: env GOOS=windows GOARCH=amd64 go build ./studio
+- script:
+    cd ./studio
+    go get -d
+    env GOOS=windows GOARCH=amd64 go build ./studio
+    cd ..
   displayName: 'Building Studio Helper'
