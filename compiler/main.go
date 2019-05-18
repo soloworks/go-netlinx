@@ -19,7 +19,7 @@ func main() {
 	flag.Parse()
 
 	// Load in the core APW file
-	apw, err := apw.LoadAPWInfo(args.Source) 
+	apw, err := apw.LoadAPWInfo(args.Source) x
 
 	if err != nil {
 		println("Error Loading CoreAPW:" + err.Error()) 
