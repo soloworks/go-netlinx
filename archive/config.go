@@ -1,4 +1,4 @@
-package config
+package main
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ type Configuration struct {
 	CompilerPath    string `json:"compilerPath"`
 	RepoRootPath    string `json:"repoRootPath"`
 	GlobalAMXFolder string `json:"globalAMXFolder"`
-	GlobalProject   string `json:"globalProject"`
+	GlobalProject   string `json:"globalProject"` 
 }
 
 // Load imports from a JSON file

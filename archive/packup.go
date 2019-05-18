@@ -8,11 +8,12 @@ import (
 	"path/filepath"
 	"strconv"
 	"time" 
+	"github.com/soloworks/go-netlinx/apw"
 )
 
 type myargs struct {
 	path      string
-	workspace string
+	workspace string 
 	project   string
 	system    string
 	archive   bool
@@ -23,7 +24,7 @@ type myargs struct {
 func main() {
 
 	// Local Variables
-	c := config.Load("packup.json") 
+	c := Load("packup.json") 
 	var args myargs
 
 	// Specify Build ID from UTC
