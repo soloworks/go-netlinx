@@ -26,7 +26,7 @@ type APW struct {
 }
 
 // NewAPW loads or creates an APW object
-func NewAPW(filename string) *APW {
+sfunc NewAPW(filename string) *APW {
 
 	// Create a new Structure
 	var apw APW
