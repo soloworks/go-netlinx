@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: go build ./apw
+  displayName: 'Building apw'
+  
+steps:
+- script: go build ./archive
+  displayName: 'Building Archive Helper'
+  
+steps:
+- script: env GOOS=windows GOARCH=amd64 go build ./compiler
+  displayName: 'Building Compiler Helper'
+  
+steps:
+- script: go build ./ftp
+  displayName: 'Building FTP Helper'
+  
+steps:
+- script: env GOOS=windows GOARCH=amd64 go build ./studio
+  displayName: 'Building Studio Helper'

@@ -1,0 +1,10 @@
+{
+    "Mask":"*.txt",
+    "Systems":[
+        {
+            "Host":"192.168.2.20",
+            "Username":"administrator",
+            "Password":"password"
+        }
+    ]
+}
