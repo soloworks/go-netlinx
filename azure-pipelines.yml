@@ -13,23 +13,27 @@ pool:
 steps:
 - script: go build ./apw
   displayName: 'Building apw'
-#- script: go build ./archive
-#  displayName: 'Building Archive Helper'
+# - script:
+#     cd ./archive
+#     go get -d
+#     go build
+#     cd ..
+#   displayName: 'Building Archive Helper'
 - script:
     cd ./compiler
     go get -d
-    env GOOS=windows GOARCH=amd64 go build ./compiler
+    env GOOS=windows GOARCH=amd64 go build
     cd ..
   displayName: 'Building Compiler Helper'
 - script:
     cd ./ftp
     go get -d
-    go build ./ftp
+    go build
     cd ..
   displayName: 'Building FTP Helper'
 - script:
     cd ./studio
     go get -d
-    env GOOS=windows GOARCH=amd64 go build ./studio
+    env GOOS=windows GOARCH=amd64 go build 
     cd ..
   displayName: 'Building Studio Helper'
