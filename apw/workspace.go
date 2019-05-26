@@ -3,8 +3,6 @@ package apw
 import (
 	"bytes"
 	"encoding/xml"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 	"sort"
 )
@@ -123,54 +121,8 @@ func (w *Workspace) convert(pt packType) {
 	}
 }
 
-// Load returns a struct containing the contents of the
-// passed Project's .apw file
-// Move the remove of global project to a seperate function
-// Returns empty workspace if file doesn't exist
-func Load(fn string) (*Workspace, error) {
-
-	// Create new Workspace Object
-	w := Workspace{}
-	// Open to .apw file
-	f, err := os.Open(fn)
-	if err != nil {
-		return &w, err
-	}
-	defer f.Close()
-
-	// Read contents of file
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		return nil, err
-	}
-
-	// Convert XML to Structure
-	xml.Unmarshal(b, &w)
-
-	// Sort Projects into order
-	sort.Sort(ByProjectID(w.Projects))
-
-	// Sort Systems into order
-	for _, p := range w.Projects {
-		sort.Sort(BySystemID(p.Systems))
-	}
-
-	// Return Cleanly
-	return &w, nil
-}
-
-// Save dumps the XML into the specified file
-func Save(w *Workspace, fn string) error {
-	// Create the dest directory
-	os.MkdirAll(filepath.Dir(fn), os.ModePerm)
-	// Dump XML to file
-	b, _ := w.Bytes()
-	err := ioutil.WriteFile(fn, b, 0644)
-	return err
-}
-
-// Bytes converts structure to XML bytes
-func (w *Workspace) Bytes() ([]byte, error) {
+// ToXML converts structure to XML bytes
+func (w *Workspace) ToXML() ([]byte, error) {
 
 	// Set static values
 	w.CurrentVersion = "4.0"
