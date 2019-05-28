@@ -9,7 +9,7 @@ import (
 )
 
 // GenerateCFG creates a Netlinx Compiler .cfg file from a workspace
-func GenerateCFG(a apw.APW) []byte {
+func GenerateCFG(a apw.APW, root string) []byte {
 
 	// Create an empty list for modules
 	var Modules []string
@@ -40,7 +40,15 @@ func GenerateCFG(a apw.APW) []byte {
 	sb.WriteString(`; Run> NLRC -C"C:\YourDir\compile.cfg"`)
 	sb.WriteString(";\n")
 	sb.WriteString(";------------------------------------------------------------------------------\n\n")
-	sb.WriteString("MainAXSRootDirectory=-R\n\n")
+
+	// Write out Root Directory
+	if root == "" {
+		sb.WriteString("MainAXSRootDirectory=-R\n\n")
+	} else {
+		sb.WriteString("MainAXSRootDirectory=")
+		sb.WriteString(root)
+		sb.WriteString("\n\n")
+	}
 	sb.WriteString("OutputLogFileOption=N\n")
 	sb.WriteString("OutputLogConsoleOption=Y\n")
 	sb.WriteString("BuildWithDebugInformation=Y\n")
