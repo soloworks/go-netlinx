@@ -1,9 +1,6 @@
-package main
+package compile
 
 import (
-	"flag"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -11,26 +8,8 @@ import (
 	"github.com/soloworks/go-netlinx/apw"
 )
 
-type myargs struct {
-	Source string
-	Dest   string
-}
-
-var args myargs
-
-func main() {
-	// Get Command Line Variables
-	flag.StringVar(&args.Source, "Source", "", "Source APW File")
-	flag.StringVar(&args.Dest, "Dest", "compile.cfg", "Destination CFG File")
-	flag.Parse()
-
-	// Load in the core APW file
-	a, err := apw.LoadAPW(args.Source)
-	if err != nil {
-		println(`Error Loading APW File: "` + args.Source + `"`)
-		println(err)
-		os.Exit(1)
-	}
+// GenerateCFG creates a Netlinx Compiler .cfg file from a workspace
+func GenerateCFG(a apw.APW) []byte {
 
 	// Create an empty list for modules
 	var Modules []string
@@ -83,12 +62,6 @@ func main() {
 		sb.WriteString(x)
 		sb.WriteString("\n")
 	}
-
-	// Output to File
-	err = ioutil.WriteFile(args.Dest, []byte(sb.String()), 0644)
-	if err != nil {
-		println(`Error Writing CFG File: "` + args.Dest + `"`)
-		println(err)
-		os.Exit(1)
-	}
+	// Return the file as bytes
+	return []byte(sb.String())
 }
