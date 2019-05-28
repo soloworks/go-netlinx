@@ -20,16 +20,31 @@ steps:
 #     cd ..
 #   displayName: 'Building Archive Helper'
 #   Windows Build: env GOOS=windows GOARCH=amd64 go build 
+
 - script: |
     go get -d
-    env GOOS=windows GOARCH=amd64 go build
-  workingDirectory: './compiler'
-  displayName: 'Building Compiler Helper'
+    go build
+  workingDirectory: './compile'
+  displayName: 'Building Compile package'
+
+- script: |
+    go get -d
+    go build
+  workingDirectory: './compile/cli'
+  displayName: 'Building Compile CLI Tool'
+
+- script: |
+    go get -d
+    go build
+  workingDirectory: './compile/cloud'
+  displayName: 'Building Compile Cloud Function'
+
 - script: |
     go get -d
     go build
   workingDirectory: './ftp'
   displayName: 'Building FTP Helper'
+
 - script: |
     go get -d
     go build
