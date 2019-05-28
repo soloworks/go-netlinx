@@ -7,6 +7,6 @@ require (
 	github.com/soloworks/go-netlinx/compile v0.0.0-20190528105346-d600ac5ae4bc
 )
 
-replace github.com/soloworks/go-netlinx/apw => ../../apw
+//replace github.com/soloworks/go-netlinx/apw => ../../apw
 
-replace github.com/soloworks/go-netlinx/compile => ../
+//replace github.com/soloworks/go-netlinx/compile => ../
