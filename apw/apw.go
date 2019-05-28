@@ -3,12 +3,14 @@ package apw
 import (
 	"archive/zip"
 	"bytes"
+	"encoding/xml"
 	"errors"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -52,7 +54,7 @@ func LoadAPW(filename string) (*APW, error) {
 
 	// Create or populate actual Workspace
 	var err error
-	apw.Workspace, err = Load(filename)
+	apw.Workspace, err = readXML(filename)
 	if err == nil {
 		// Gather File References
 		apw.populateFileReferences()
@@ -60,6 +62,51 @@ func LoadAPW(filename string) (*APW, error) {
 
 	// Return
 	return apw, err
+}
+
+// readXML returns a struct containing the contents of the
+// passed Project's .apw file
+// Returns empty workspace if file doesn't exist
+func readXML(fn string) (*Workspace, error) {
+
+	// Create new Workspace Object
+	w := Workspace{}
+	// Open to .apw file
+	f, err := os.Open(fn)
+	if err != nil {
+		return &w, err
+	}
+	defer f.Close()
+
+	// Read contents of file
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		return nil, err
+	}
+
+	// Convert XML to Structure
+	xml.Unmarshal(b, &w)
+
+	// Sort Projects into order
+	sort.Sort(ByProjectID(w.Projects))
+
+	// Sort Systems into order
+	for _, p := range w.Projects {
+		sort.Sort(BySystemID(p.Systems))
+	}
+
+	// Return Cleanly
+	return &w, nil
+}
+
+// writeXML outputs the workspace XML into the specified file
+func writeXML(w *Workspace, fn string) error {
+	// Create the dest directory
+	os.MkdirAll(filepath.Dir(fn), os.ModePerm)
+	// Dump XML to file
+	b, _ := w.ToXML()
+	err := ioutil.WriteFile(fn, b, 0644)
+	return err
 }
 
 // GatherFiles checks all referenced files exist, returns nil if all ok, otherwise returns array of filenames
@@ -97,23 +144,23 @@ func (apw *APW) populateFileReferences() error {
 	return nil
 }
 
-// FindInFolder searches all subdirectories (recursivly option) for any
+// FindAPWs searches all subdirectories (recursivly option) for any
 // .apw files and returns a list of AMXProjects
-func FindInFolder(dir string, recursive bool) []*APW {
+func FindAPWs(sourceDir string, recursive bool) []*APW {
 
 	// Create array to hold discovered projects
 	var APWs []*APW
 
 	// Check root folder and store APWs
-	APWs = append(APWs, getAPWs(dir)...)
+	APWs = append(APWs, gatherAPWs(sourceDir)...)
 
 	// Do Sub Folder(s) if requested
 	if recursive {
-		files, _ := ioutil.ReadDir(dir)
+		files, _ := ioutil.ReadDir(sourceDir)
 
 		for _, subDir := range files {
 			if subDir.IsDir() {
-				APWs = append(APWs, FindInFolder(filepath.Join(dir, subDir.Name()), recursive)...)
+				APWs = append(APWs, FindAPWs(filepath.Join(sourceDir, subDir.Name()), recursive)...)
 			}
 		}
 	}
@@ -122,7 +169,7 @@ func FindInFolder(dir string, recursive bool) []*APW {
 	return APWs
 }
 
-func getAPWs(dir string) []*APW {
+func gatherAPWs(dir string) []*APW {
 
 	// Create array to hold discovered projects
 	var APWs []*APW
@@ -144,16 +191,9 @@ func getAPWs(dir string) []*APW {
 	return APWs
 }
 
-// LoadWorkspace fetches the XML for this apw file
-func (apw *APW) loadXML() error {
-	var err error
-	apw.Workspace, err = Load(apw.Filename)
-	return err
-}
-
-// ExportWorkspace saves the XML to the designated destination folder
-func (apw *APW) ExportWorkspace() error {
-	Save(apw.Workspace, apw.Filename)
+// ExportAPW saves the XML to the designated destination folder
+func (apw *APW) ExportAPW() error {
+	writeXML(apw.Workspace, apw.Filename)
 	return nil
 }
 
@@ -226,8 +266,8 @@ func (apw *APW) ExportArchive(destDir string, buildID string) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	myXML, _ := apw.Workspace.Bytes()
-	_, err = f.Write([]byte(myXML))
+	b, _ := apw.Workspace.ToXML()
+	_, err = f.Write([]byte(b))
 	if err != nil {
 		log.Fatal(err)
 	}
