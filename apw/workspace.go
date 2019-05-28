@@ -121,6 +121,16 @@ func (w *Workspace) convert(pt packType) {
 	}
 }
 
+// FromBytes populates a Workspace object from XML in bytes
+func (w *Workspace) FromBytes(b []byte) error {
+
+	// Convert XML to Structure
+	xml.Unmarshal(b, &w)
+
+	// Return Cleanly
+	return nil
+}
+
 // ToXML converts structure to XML bytes
 func (w *Workspace) ToXML() ([]byte, error) {
 

@@ -3,7 +3,6 @@ package apw
 import (
 	"archive/zip"
 	"bytes"
-	"encoding/xml"
 	"errors"
 	"io"
 	"io/ioutil"
@@ -28,53 +27,49 @@ type APW struct {
 }
 
 // NewAPW loads or creates an APW object
-func NewAPW(filename string) *APW {
+func NewAPW(fn string, xml []byte) (*APW, error) {
 
 	// Create a new Structure
 	var apw APW
 	apw.FilesReferenced = make(map[string]string)
 
 	// Populate the file details
-	apw.Filename = filename
-	apw.Name = filepath.Base(filename)
+	apw.Filename = fn
+	apw.Name = filepath.Base(fn)
 	apw.Identifier = strings.TrimSuffix(apw.Name, filepath.Ext(apw.Name))
-	apw.OriginPath = filepath.Dir(filename)
+	apw.OriginPath = filepath.Dir(fn)
 	// Create a new empty Workspace
 	apw.Workspace = &Workspace{}
+	// Populate and Process if xml is present
+	if xml != nil {
+		err := apw.Workspace.FromBytes(xml)
+		if err != nil {
+			return nil, err
+		}
 
-	// Return
-	return &apw
-}
-
-// LoadAPW loads or creates an APW object
-func LoadAPW(filename string) (*APW, error) {
-
-	// Make a new Object
-	apw := NewAPW(filename)
-
-	// Create or populate actual Workspace
-	var err error
-	apw.Workspace, err = readXML(filename)
-	if err == nil {
 		// Gather File References
 		apw.populateFileReferences()
+		// Sort Projects into order
+		sort.Sort(ByProjectID(apw.Workspace.Projects))
+
+		// Sort Systems into order
+		for _, p := range apw.Workspace.Projects {
+			sort.Sort(BySystemID(p.Systems))
+		}
+
 	}
 
 	// Return
-	return apw, err
+	return &apw, nil
 }
 
-// readXML returns a struct containing the contents of the
-// passed Project's .apw file
-// Returns empty workspace if file doesn't exist
-func readXML(fn string) (*Workspace, error) {
+// LoadAPW loads an APW from filename, the passes to ParseAPW for Return
+func LoadAPW(fn string) (*APW, error) {
 
-	// Create new Workspace Object
-	w := Workspace{}
 	// Open to .apw file
 	f, err := os.Open(fn)
 	if err != nil {
-		return &w, err
+		return nil, err
 	}
 	defer f.Close()
 
@@ -84,23 +79,17 @@ func readXML(fn string) (*Workspace, error) {
 		return nil, err
 	}
 
-	// Convert XML to Structure
-	xml.Unmarshal(b, &w)
-
-	// Sort Projects into order
-	sort.Sort(ByProjectID(w.Projects))
-
-	// Sort Systems into order
-	for _, p := range w.Projects {
-		sort.Sort(BySystemID(p.Systems))
+	// Make a new Object
+	apw, err := NewAPW(fn, b)
+	if err != nil {
+		return nil, err
 	}
-
-	// Return Cleanly
-	return &w, nil
+	// Return
+	return apw, err
 }
 
-// writeXML outputs the workspace XML into the specified file
-func writeXML(w *Workspace, fn string) error {
+// writeFile outputs the workspace XML into the specified file
+func writeFile(w *Workspace, fn string) error {
 	// Create the dest directory
 	os.MkdirAll(filepath.Dir(fn), os.ModePerm)
 	// Dump XML to file
@@ -129,7 +118,6 @@ func (apw *APW) populateFileReferences() error {
 				} else {
 					apw.FilesReferenced[filepath.Join(apw.OriginPath, file.FilePathName)] = file.Type
 				}
-
 			}
 		}
 	}
@@ -193,7 +181,7 @@ func gatherAPWs(dir string) []*APW {
 
 // ExportAPW saves the XML to the designated destination folder
 func (apw *APW) ExportAPW() error {
-	writeXML(apw.Workspace, apw.Filename)
+	writeFile(apw.Workspace, apw.Filename)
 	return nil
 }
 
