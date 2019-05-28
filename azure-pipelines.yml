@@ -36,8 +36,8 @@ steps:
 - script: |
     go get -d
     go build
-  workingDirectory: './compile/cloud'
-  displayName: 'Building Compile Cloud Function'
+  workingDirectory: './compile/gcf'
+  displayName: 'Building Compile Google Cloud Function'
 
 - script: |
     go get -d
