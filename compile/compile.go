@@ -9,7 +9,7 @@ import (
 )
 
 // GenerateCFG creates a Netlinx Compiler .cfg file from a workspace
-func GenerateCFG(a apw.APW, root string) []byte {
+func GenerateCFG(a apw.APW, root string, logfile string) []byte {
 
 	// Create an empty list for modules
 	var Modules []string
@@ -54,8 +54,17 @@ func GenerateCFG(a apw.APW, root string) []byte {
 		sb.WriteString(root)
 		sb.WriteString("\n\n")
 	}
-	sb.WriteString("OutputLogFileOption=N\n")
-	sb.WriteString("OutputLogConsoleOption=Y\n")
+	if root != "" {
+		sb.WriteString("OutputLogFileOption=N\n")
+	} else {
+		sb.WriteString("OutputLogFileOption=Y\n")
+		sb.WriteString("OutputLogFile=")
+		sb.WriteString(root)
+		sb.WriteString("\\")
+		sb.WriteString(logfile)
+		sb.WriteString("\n")
+	}
+	sb.WriteString("OutputLogConsoleOption=N\n")
 	sb.WriteString("BuildWithDebugInformation=Y\n")
 	sb.WriteString("BuildWithSource=N\n")
 	sb.WriteString("BuildWithWC=Y\n\n")
