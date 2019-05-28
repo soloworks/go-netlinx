@@ -1,4 +1,4 @@
-module github.com/soloworks/go-netlinx/compiler
+module github.com/soloworks/go-netlinx/compile
 
 go 1.12
 
