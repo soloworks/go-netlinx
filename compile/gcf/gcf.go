@@ -3,6 +3,7 @@ package gcf
 import (
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"github.com/soloworks/go-netlinx/apw"
 	"github.com/soloworks/go-netlinx/compile"
@@ -21,8 +22,12 @@ func GenerateNetlinxCompileCfg(w http.ResponseWriter, r *http.Request) {
 	// Load this into an APW Workspace
 	a, err := apw.NewAPW("myWorkspace.apw", body)
 
+	// Get URL Variables
+	root := r.URL.Query().Get("root")
+	logfile := r.URL.Query().Get("logfile")
+	logconsole, _ := strconv.ParseBool(r.URL.Query().Get("logconsole"))
 	// Process and generate the .cfg
-	b := compile.GenerateCFG(*a)
+	b := compile.GenerateCFG(*a, root, logfile, logconsole)
 
 	w.Write(b)
 }
