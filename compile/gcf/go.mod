@@ -1,4 +1,4 @@
-module github.com/soloworks/go-netlinx/compile/cloud
+module github.com/soloworks/go-netlinx/compile/gcf
 
 go 1.12
 
