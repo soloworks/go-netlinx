@@ -54,7 +54,7 @@ func GenerateCFG(a apw.APW, root string, logfile string) []byte {
 		sb.WriteString(root)
 		sb.WriteString("\n\n")
 	}
-	if root != "" {
+	if logfile == "" {
 		sb.WriteString("OutputLogFileOption=N\n")
 	} else {
 		sb.WriteString("OutputLogFileOption=Y\n")
