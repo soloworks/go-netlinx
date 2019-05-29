@@ -12,6 +12,7 @@ import (
 type myargs struct {
 	Source string
 	Dest   string
+	Root   string
 }
 
 var args myargs
@@ -20,6 +21,7 @@ func main() {
 	// Get Command Line Variables
 	flag.StringVar(&args.Source, "Source", "", "Source APW File")
 	flag.StringVar(&args.Dest, "Dest", "compile.cfg", "Destination CFG File")
+	flag.StringVar(&args.Root, "Root", ".", "Root Directory")
 	flag.Parse()
 
 	// Load in the core APW file
@@ -31,7 +33,7 @@ func main() {
 	}
 
 	// Process and generate the .cfg
-	b := compile.GenerateCFG(*a)
+	b := compile.GenerateCFG(*a, args.Root, "", true)
 
 	// Output to File
 	err = ioutil.WriteFile(args.Dest, b, 0644)
