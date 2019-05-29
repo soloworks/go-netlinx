@@ -14,15 +14,23 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	// Create an empty list for modules
 	var Modules []string
 	var Source []string
+	IncludePath := make(map[string]struct{})
 
 	// Extract list of .axs Modules and .axs Source
 	for x, y := range a.FilesReferenced {
-		if filepath.Ext(x) == ".axs" {
+		switch filepath.Ext(x) {
+		case ".axs", ".axi":
 			switch y {
 			case "Module":
 				Modules = append(Modules, x)
 			case "Source", "MasterSrc":
 				Source = append(Source, x)
+			case "Include":
+				root = strings.ReplaceAll(root, `\`, `/`)
+				x = strings.ReplaceAll(x, `\`, `/`)
+				ip := filepath.Dir(x)
+				ip = strings.ReplaceAll(ip, `/`, `\`)
+				IncludePath[ip] = struct{}{}
 			}
 		}
 	}
@@ -30,6 +38,9 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	// Order the lists
 	sort.Strings(Modules)
 	sort.Strings(Source)
+
+	// Fix an Unix folders to Windows
+	root = strings.ReplaceAll(root, `/`, `\`)
 
 	// Build the Config File Header & Options
 	var sb strings.Builder
@@ -71,6 +82,14 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	sb.WriteString("BuildWithSource=N\n")
 	sb.WriteString("BuildWithWC=Y\n\n")
 
+	// Add the Include File Folders
+	for x := range IncludePath {
+		sb.WriteString("AdditionalIncludePath=")
+		sb.WriteString(x)
+		sb.WriteString("\n")
+	}
+
+	sb.WriteString("\n")
 	// Add the Modules
 	for _, x := range Modules {
 		sb.WriteString("AXSFILE=")
