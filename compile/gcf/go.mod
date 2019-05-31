@@ -1,6 +1,6 @@
 module github.com/soloworks/go-netlinx/compile/gcf
 
-go 1.11
+go 1.12
 
 require (
 	github.com/soloworks/go-netlinx/apw v0.0.0-20190529133117-270b39c57a76
