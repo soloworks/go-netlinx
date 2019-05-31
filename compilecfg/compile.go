@@ -1,4 +1,4 @@
-package compile
+package compilecfg
 
 import (
 	"path/filepath"
