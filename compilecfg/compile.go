@@ -16,8 +16,8 @@ func toLinux(x string) string {
 	return strings.Join(strings.Split(x, `\`), `/`)
 }
 
-// GenerateCFG creates a Netlinx Compiler .cfg file from a workspace
-func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte {
+// Generate creates a Netlinx Compiler .cfg file from a workspace
+func Generate(a apw.APW, root string, logfile string, logconsole bool) []byte {
 
 	// Create an empty list for modules
 	var Modules []string
