@@ -2,12 +2,19 @@ package compile
 
 import (
 	"path/filepath"
-	"regexp"
 	"sort"
 	"strings"
 
 	"github.com/soloworks/go-netlinx/apw"
 )
+
+func toWindows(x string) string {
+	return strings.Join(strings.Split(x, `/`), `\`)
+}
+
+func toLinux(x string) string {
+	return strings.Join(strings.Split(x, `\`), `/`)
+}
 
 // GenerateCFG creates a Netlinx Compiler .cfg file from a workspace
 func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte {
@@ -16,9 +23,6 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	var Modules []string
 	var Source []string
 	IncludePath := make(map[string]struct{})
-
-	// Create a new RegEx (strings.ReplaceAll not in Go1.11 (GCF) )
-	re := regexp.MustCompile(`\B`)
 
 	// Extract list of .axs Modules and .axs Source
 	for x, y := range a.FilesReferenced {
@@ -31,12 +35,12 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 				Source = append(Source, x)
 			case "Include":
 				//root = strings.ReplaceAll(root, `\`, `/`)
-				root = re.ReplaceAllString(root, `/`)
+				//root = toLinux(root)
 				//x = strings.ReplaceAll(x, `\`, `/`)
-				x = re.ReplaceAllString(x, `/`)
+				x = toLinux(x)
 				ip := filepath.Dir(x)
 				//ip = strings.ReplaceAll(ip, `/`, `\`)
-				ip = re.ReplaceAllString(ip, `/`)
+				ip = toWindows(ip)
 				IncludePath[ip] = struct{}{}
 			}
 		}
@@ -47,9 +51,7 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	sort.Strings(Source)
 
 	// Fix an Unix folders to Windows
-	re = regexp.MustCompile(`/`)
-	//root = strings.ReplaceAll(root, `/`, `\`)
-	root = re.ReplaceAllString(root, `\B`)
+	root = toWindows(root)
 
 	// Build the Config File Header & Options
 	var sb strings.Builder
