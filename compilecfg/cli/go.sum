@@ -1,7 +1,7 @@
 github.com/soloworks/go-netlinx v0.0.0-20190531151213-8a28d4c5dd30 h1:Q9r+74TOyFw+96Nx8AGK/FlG4qWAv71QujbLUKbjgt4=
-github.com/soloworks/go-netlinx/apw v0.0.0-20190518170420-887cf199d998/go.mod h1:RPD+Y0FMl294lpjrl7q+i+3rTiqaMj5vDMCab6ZFssw=
-github.com/soloworks/go-netlinx/apw v0.0.0-20190530185526-55b68dfdffb9/go.mod h1:hvEWxn4uvtfvDprH8dPvRuiLbZnkKupPi7sc45T2HvA=
 github.com/soloworks/go-netlinx/apw v0.0.0-20190531151213-8a28d4c5dd30 h1:ireqxK3e6+tr/3DAThERG1ka8+3ge/FPBft4tv5VYzQ=
 github.com/soloworks/go-netlinx/apw v0.0.0-20190531151213-8a28d4c5dd30/go.mod h1:hvEWxn4uvtfvDprH8dPvRuiLbZnkKupPi7sc45T2HvA=
-github.com/soloworks/go-netlinx/compile v0.0.0-20190530185526-55b68dfdffb9/go.mod h1:eWcQpTgpYNrCJbWkqldbdT1Cb+jEDvleCQN8ZGewQdM=
-github.com/soloworks/go-netlinx/compile v0.0.0-20190531151213-8a28d4c5dd30/go.mod h1:eRoaiqc67h6noZesd2EI1fqjbX2YjASdln0jOx5HWjA=
+github.com/soloworks/go-netlinx/apw v0.0.0-20190531193806-4eee1f0c5cbb h1:j9rWSGWe7QffoG8d251kqzqpp6DFh5fobPeuBjndcwk=
+github.com/soloworks/go-netlinx/apw v0.0.0-20190531193806-4eee1f0c5cbb/go.mod h1:hvEWxn4uvtfvDprH8dPvRuiLbZnkKupPi7sc45T2HvA=
+github.com/soloworks/go-netlinx/compilecfg v0.0.0-20190531193806-4eee1f0c5cbb h1:OlsMNgPikgJIklhysEPnwQL/wzlc44Af2/AR9zxcgBQ=
+github.com/soloworks/go-netlinx/compilecfg v0.0.0-20190531193806-4eee1f0c5cbb/go.mod h1:NPbsawbq3XWmkktAFxnpfUVSJV1hE7PhaLAJeZvCxRI=
