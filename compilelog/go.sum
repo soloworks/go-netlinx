@@ -1,0 +1,5 @@
+github.com/soloworks/go-netlinx/apw v0.0.0-20190531151213-8a28d4c5dd30/go.mod h1:hvEWxn4uvtfvDprH8dPvRuiLbZnkKupPi7sc45T2HvA=
+github.com/soloworks/go-netlinx/apw v0.0.0-20190531201957-cef3f8d7d7d6 h1:MSYXZ+VYd5LXW5t4cPLxIGF0RMgia2fRim+O2rPIq2s=
+github.com/soloworks/go-netlinx/apw v0.0.0-20190531201957-cef3f8d7d7d6/go.mod h1:hvEWxn4uvtfvDprH8dPvRuiLbZnkKupPi7sc45T2HvA=
+github.com/soloworks/go-netlinx/compilecfg v0.0.0-20190531201957-cef3f8d7d7d6 h1:42n/cyC8cer2zlTXZr0gdONfQIP395SFbgmODj9ijjw=
+github.com/soloworks/go-netlinx/compilecfg v0.0.0-20190531201957-cef3f8d7d7d6/go.mod h1:NPbsawbq3XWmkktAFxnpfUVSJV1hE7PhaLAJeZvCxRI=
