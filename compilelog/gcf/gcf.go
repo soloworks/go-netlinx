@@ -7,9 +7,9 @@ import (
 	"github.com/soloworks/go-netlinx/compilelog"
 )
 
-// GenerateNetlinxCompileCfg is a Cloud Function which returns a .cfg file for
+// ProcessNetlinxCompileLog is a Cloud Function which returns a .cfg file for
 // Netlinx compiler from a .apw xml file (passed as body)
-func GenerateNetlinxCompileCfg(w http.ResponseWriter, r *http.Request) {
+func ProcessNetlinxCompileLog(w http.ResponseWriter, r *http.Request) {
 	// Get Body as Bytes Array
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
