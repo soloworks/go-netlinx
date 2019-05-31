@@ -42,6 +42,24 @@ steps:
 - script: |
     go get -d
     go build
+  workingDirectory: './compilelog'
+  displayName: 'Building Compile Log package'
+
+- script: |
+    go get -d
+    go build
+  workingDirectory: './compilelog/cli'
+  displayName: 'Building Compile Log CLI Tool'
+
+- script: |
+    go get -d
+    go build
+  workingDirectory: './compilelog/gcf'
+  displayName: 'Building Compile Log Cloud Function'
+
+- script: |
+    go get -d
+    go build
   workingDirectory: './ftp'
   displayName: 'Building FTP Helper'
 
