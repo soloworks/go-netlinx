@@ -24,19 +24,19 @@ steps:
 - script: |
     go get -d
     go build
-  workingDirectory: './compile'
-  displayName: 'Building Compile package'
+  workingDirectory: './compilecfg'
+  displayName: 'Building Compile Config package'
 
 - script: |
     go get -d
     go build
-  workingDirectory: './compile/cli'
-  displayName: 'Building Compile CLI Tool'
+  workingDirectory: './compilecfg/cli'
+  displayName: 'Building Compile Config CLI Tool'
 
 - script: |
     go get -d
     go build
-  workingDirectory: './compile/gcf'
+  workingDirectory: './compilecfg/gcf'
   displayName: 'Building Compile Google Cloud Function'
 
 - script: |
