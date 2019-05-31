@@ -27,7 +27,7 @@ func GenerateNetlinxCompileCfg(w http.ResponseWriter, r *http.Request) {
 	logfile := r.URL.Query().Get("logfile")
 	logconsole, _ := strconv.ParseBool(r.URL.Query().Get("logconsole"))
 	// Process and generate the .cfg
-	b := compile.GenerateCFG(*a, root, logfile, logconsole)
+	b := compilecfg.Generate(*a, root, logfile, logconsole)
 
 	w.Write(b)
 }
