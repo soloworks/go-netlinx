@@ -2,6 +2,7 @@ package compile
 
 import (
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -16,6 +17,9 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	var Source []string
 	IncludePath := make(map[string]struct{})
 
+	// Create a new RegEx (strings.ReplaceAll not in Go1.11 (GCF) )
+	re := regexp.MustCompile(`\`)
+
 	// Extract list of .axs Modules and .axs Source
 	for x, y := range a.FilesReferenced {
 		switch filepath.Ext(x) {
@@ -26,10 +30,13 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 			case "Source", "MasterSrc":
 				Source = append(Source, x)
 			case "Include":
-				root = strings.ReplaceAll(root, `\`, `/`)
-				x = strings.ReplaceAll(x, `\`, `/`)
+				//root = strings.ReplaceAll(root, `\`, `/`)
+				root = re.ReplaceAllString(root, `/`)
+				//x = strings.ReplaceAll(x, `\`, `/`)
+				x = re.ReplaceAllString(x, `/`)
 				ip := filepath.Dir(x)
-				ip = strings.ReplaceAll(ip, `/`, `\`)
+				//ip = strings.ReplaceAll(ip, `/`, `\`)
+				ip = re.ReplaceAllString(ip, `/`)
 				IncludePath[ip] = struct{}{}
 			}
 		}
@@ -40,7 +47,9 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	sort.Strings(Source)
 
 	// Fix an Unix folders to Windows
-	root = strings.ReplaceAll(root, `/`, `\`)
+	re = regexp.MustCompile(`/`)
+	//root = strings.ReplaceAll(root, `/`, `\`)
+	root = re.ReplaceAllString(root, `\`)
 
 	// Build the Config File Header & Options
 	var sb strings.Builder
