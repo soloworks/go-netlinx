@@ -33,7 +33,7 @@ func main() {
 	}
 
 	// Process and generate the .cfg
-	b := compile.GenerateCFG(*a, args.Root, "", true)
+	b := compilecfg.Generate(*a, args.Root, "", true)
 
 	// Output to File
 	err = ioutil.WriteFile(args.Dest, b, 0644)
