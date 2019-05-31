@@ -18,7 +18,7 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	IncludePath := make(map[string]struct{})
 
 	// Create a new RegEx (strings.ReplaceAll not in Go1.11 (GCF) )
-	re := regexp.MustCompile(`\`)
+	re := regexp.MustCompile(`\B`)
 
 	// Extract list of .axs Modules and .axs Source
 	for x, y := range a.FilesReferenced {
@@ -49,7 +49,7 @@ func GenerateCFG(a apw.APW, root string, logfile string, logconsole bool) []byte
 	// Fix an Unix folders to Windows
 	re = regexp.MustCompile(`/`)
 	//root = strings.ReplaceAll(root, `/`, `\`)
-	root = re.ReplaceAllString(root, `\`)
+	root = re.ReplaceAllString(root, `\B`)
 
 	// Build the Config File Header & Options
 	var sb strings.Builder
