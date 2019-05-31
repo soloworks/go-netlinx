@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/soloworks/go-netlinx/apw"
-	"github.com/soloworks/go-netlinx/compile"
+	"github.com/soloworks/go-netlinx/compilecfg"
 )
 
 // GenerateNetlinxCompileCfg is a Cloud Function which returns a .cfg file for

@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/soloworks/go-netlinx/apw"
-	"github.com/soloworks/go-netlinx/compile"
+	"github.com/soloworks/go-netlinx/compilecfg"
 )
 
 type myargs struct {
