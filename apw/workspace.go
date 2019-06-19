@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"path/filepath"
 	"sort"
+	"regexp"
 )
 
 // Workspace represents the APW XML file structure
@@ -146,17 +147,17 @@ func (w *Workspace) ToXML() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	/*
-		// Find each </ instance
-		for _, s := range bytes.Split(output, []byte(">")) {
-			b.Write(s)
-			b.Write([]byte(">"))
-			if bytes.Index(s, []byte("</")) != -1 {
-				b.Write([]byte("\r\n"))
-			}
-		}
-	*/
-	b.Write(output)
+	
+	 r,err := regexp.Compile(`</[^>]+>`)
+	 if err != nil{
+		println("REG EX ERROR!!!")
+	 	println(err)
+	 }
+	 //r.ReplaceAllString(string(output))
+	s := string(output)
+	s = r.ReplaceAllString(s, "${0}\r\n")
+
+	b.WriteString(s)
 	// Return Bytes
 	return b.Bytes(), nil
 }
@@ -220,3 +221,4 @@ func FileFolder(t string) string {
 		}
 	}
 }
+
