@@ -23,10 +23,20 @@ func Generate(a apw.APW, root string, logfile string, logconsole bool) []byte {
 	var Modules []string
 	var Source []string
 	IncludePath := make(map[string]struct{})
+	ModulePath := make(map[string]struct{})
 
 	// Extract list of .axs Modules and .axs Source
 	for x, y := range a.FilesReferenced {
 		switch filepath.Ext(x) {
+
+		case ".tkn", ".jar":
+			switch y {
+			case "Module", "DUET":
+				x = toLinux(x)
+				ip := filepath.Dir(x)
+				ip = toWindows(ip)
+				ModulePath[ip] = struct{}{}
+			}
 		case ".axs", ".axi":
 			switch y {
 			case "Module":
@@ -34,12 +44,8 @@ func Generate(a apw.APW, root string, logfile string, logconsole bool) []byte {
 			case "Source", "MasterSrc":
 				Source = append(Source, x)
 			case "Include":
-				//root = strings.ReplaceAll(root, `\`, `/`)
-				//root = toLinux(root)
-				//x = strings.ReplaceAll(x, `\`, `/`)
 				x = toLinux(x)
 				ip := filepath.Dir(x)
-				//ip = strings.ReplaceAll(ip, `/`, `\`)
 				ip = toWindows(ip)
 				IncludePath[ip] = struct{}{}
 			}
@@ -93,9 +99,16 @@ func Generate(a apw.APW, root string, logfile string, logconsole bool) []byte {
 	sb.WriteString("BuildWithSource=N\n")
 	sb.WriteString("BuildWithWC=Y\n\n")
 
-	// Add the Include File Folders
+	// Add the additional Include paths
 	for x := range IncludePath {
 		sb.WriteString("AdditionalIncludePath=")
+		sb.WriteString(x)
+		sb.WriteString("\n")
+	}
+
+	// Add the additional Module paths
+	for x := range ModulePath {
+		sb.WriteString("AdditionalModulePath=")
 		sb.WriteString(x)
 		sb.WriteString("\n")
 	}
